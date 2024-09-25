@@ -1,6 +1,8 @@
 import {
 	BufferAttribute,
 	BufferGeometry,
+	Color,
+	ColorManagement,
 	DoubleSide,
 	FileLoader,
 	Group,
@@ -8,6 +10,7 @@ import {
 	Mesh,
 	MeshBasicMaterial,
 	RawShaderMaterial,
+	SRGBColorSpace,
 	TextureLoader,
 	Quaternion,
 	Vector3
@@ -182,6 +185,8 @@ class StrokeGeometry extends BufferGeometry {
 		const vector3 = new Vector3();
 		const vector4 = new Vector3();
 
+		const color = new Color();
+
 		// size = size / 2;
 
 		for ( const k in strokes ) {
@@ -190,7 +195,10 @@ class StrokeGeometry extends BufferGeometry {
 			const positions = stroke[ 0 ];
 			const quaternions = stroke[ 1 ];
 			const size = stroke[ 2 ];
-			const color = stroke[ 3 ];
+			const rgba = stroke[ 3 ];
+			const alpha = stroke[ 3 ][ 3 ];
+
+			ColorManagement.toWorkingColorSpace( color.fromArray( rgba ), SRGBColorSpace );
 
 			prevPosition.fromArray( positions, 0 );
 			prevQuaternion.fromArray( quaternions, 0 );
@@ -227,13 +235,13 @@ class StrokeGeometry extends BufferGeometry {
 				prevPosition.copy( position );
 				prevQuaternion.copy( quaternion );
 
-				colors.push( ...color );
-				colors.push( ...color );
-				colors.push( ...color );
+				colors.push( ...color, alpha );
+				colors.push( ...color, alpha );
+				colors.push( ...color, alpha );
 
-				colors.push( ...color );
-				colors.push( ...color );
-				colors.push( ...color );
+				colors.push( ...color, alpha );
+				colors.push( ...color, alpha );
+				colors.push( ...color, alpha );
 
 				const p1 = i / l;
 				const p2 = ( i - 3 ) / l;

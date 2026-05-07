@@ -65,7 +65,6 @@
 		dracoLoader.setDecoderConfig( { type: 'js' } );
 
 		init();
-		animate();
 
 		function init() {
 
@@ -155,6 +154,7 @@
 			// renderer
 			renderer = new THREE.WebGLRenderer( { antialias: false } );
 			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( animate );
 			container.appendChild( renderer.domElement );
 
 			//
@@ -208,6 +208,7 @@
 
 			} );
 			ssrPass.thickness = 0.018;
+			gui.add( ssrPass, 'resolutionScale' ).min( 0 ).max( 1 );
 			gui.add( ssrPass, 'thickness' ).min( 0 ).max( .1 ).step( .0001 );
 			ssrPass.infiniteThick = false;
 			gui.add( ssrPass, 'infiniteThick' );
@@ -288,8 +289,6 @@
 		}
 
 		function animate() {
-
-			requestAnimationFrame( animate );
 
 			stats.begin();
 			render();

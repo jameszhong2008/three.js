@@ -9,7 +9,7 @@
 	<body>
 
 		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> ar - plane detection<br/>(Chrome Android 81+)
+			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> ar - plane detection<br/>
 		</div>
 
 		<script type="importmap">
@@ -32,7 +32,7 @@
 			const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
 			renderer.setPixelRatio( window.devicePixelRatio );
 			renderer.setSize( window.innerWidth, window.innerHeight );
-			renderer.setAnimationLoop( render );
+			renderer.setAnimationLoop( animate );
 			renderer.xr.enabled = true;
 			document.body.appendChild( renderer.domElement );
 
@@ -66,7 +66,7 @@
 
 			}
 
-			function render() {
+			function animate() {
 
 				renderer.render( scene, camera );
 

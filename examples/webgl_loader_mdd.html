@@ -27,7 +27,7 @@
 
 			import { MDDLoader } from 'three/addons/loaders/MDDLoader.js';
 
-			let camera, scene, renderer, mixer, clock;
+			let camera, scene, renderer, mixer, timer;
 
 			init();
 
@@ -39,7 +39,8 @@
 				camera.position.set( 8, 8, 8 );
 				camera.lookAt( scene.position );
 
-				clock = new THREE.Clock();
+				timer = new THREE.Timer();
+				timer.connect( document );
 
 				//
 
@@ -61,8 +62,6 @@
 					mixer = new THREE.AnimationMixer( mesh );
 					mixer.clipAction( clip ).play(); // use clip
 
-					animate();
-
 				} );
 
 				//
@@ -70,6 +69,7 @@
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( animate );
 				document.body.appendChild( renderer.domElement );
 
 				window.addEventListener( 'resize', onWindowResize );
@@ -87,9 +87,9 @@
 
 			function animate() {
 
-				requestAnimationFrame( animate );
+				timer.update();
 
-				const delta = clock.getDelta();
+				const delta = timer.getDelta();
 
 				if ( mixer ) mixer.update( delta );
 

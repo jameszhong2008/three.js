@@ -26,12 +26,11 @@
 			import * as THREE from 'three';
 
 			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-			import { VOXLoader, VOXMesh } from 'three/addons/loaders/VOXLoader.js';
+			import { VOXLoader } from 'three/addons/loaders/VOXLoader.js';
 
 			let camera, controls, scene, renderer;
 
 			init();
-			animate();
 
 			function init() {
 
@@ -55,19 +54,12 @@
 				scene.add( dirLight2 );
 
 				const loader = new VOXLoader();
-				loader.load( 'models/vox/monu10.vox', function ( chunks ) {
+				loader.load( 'models/vox/monu10.vox', function ( result ) {
 
-					for ( let i = 0; i < chunks.length; i ++ ) {
-
-						const chunk = chunks[ i ];
-
-						// displayPalette( chunk.palette );
-
-						const mesh = new VOXMesh( chunk );
-						mesh.scale.setScalar( 0.0015 );
-						scene.add( mesh );
-
-					}
+					const mesh = result.scene.children[ 0 ];
+					mesh.position.y = 0;
+					mesh.scale.setScalar( 0.0015 );
+					scene.add( mesh );
 
 				} );
 
@@ -76,6 +68,7 @@
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( animate );
 				document.body.appendChild( renderer.domElement );
 
 				// controls
@@ -131,8 +124,6 @@
 			}
 
 			function animate() {
-
-				requestAnimationFrame( animate );
 
 				controls.update();
 

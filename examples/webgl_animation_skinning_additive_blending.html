@@ -40,7 +40,7 @@
 			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 			let scene, renderer, camera, stats;
-			let model, skeleton, mixer, clock;
+			let model, skeleton, mixer, timer;
 
 			const crossFadeControls = [];
 
@@ -64,7 +64,8 @@
 			function init() {
 
 				const container = document.getElementById( 'container' );
-				clock = new THREE.Clock();
+				timer = new THREE.Timer();
+				timer.connect( document );
 
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xa0a0a0 );
@@ -148,7 +149,7 @@
 
 					createPanel();
 
-					animate();
+					renderer.setAnimationLoop( animate );
 
 				} );
 
@@ -392,9 +393,9 @@
 
 			function animate() {
 
-				// Render loop
+				timer.update();
 
-				requestAnimationFrame( animate );
+				// Render loop
 
 				for ( let i = 0; i !== numAnimations; ++ i ) {
 
@@ -407,15 +408,15 @@
 
 				// Get the time elapsed since the last frame, used for mixer update
 
-				const mixerUpdateDelta = clock.getDelta();
+				const mixerUpdateDelta = timer.getDelta();
 
 				// Update the animation mixer, the stats panel, and render this frame
 
 				mixer.update( mixerUpdateDelta );
 
-				stats.update();
-
 				renderer.render( scene, camera );
+
+				stats.update();
 
 			}
 

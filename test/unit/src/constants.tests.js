@@ -1,5 +1,3 @@
-/* global QUnit */
-
 import * as Constants from '../../../src/constants.js';
 
 export default QUnit.module( 'Constants', () => {
@@ -71,6 +69,8 @@ export default QUnit.module( 'Constants', () => {
 		assert.equal( Constants.CineonToneMapping, 3, 'CineonToneMapping is equal to 3' );
 		assert.equal( Constants.ACESFilmicToneMapping, 4, 'ACESFilmicToneMapping is equal to 4' );
 		assert.equal( Constants.CustomToneMapping, 5, 'CustomToneMapping is equal to 5' );
+		assert.equal( Constants.AgXToneMapping, 6, 'AgXToneMapping is equal to 6' );
+		assert.equal( Constants.NeutralToneMapping, 7, 'NeutralToneMapping is equal to 7' );
 
 		assert.equal( Constants.AttachedBindMode, 'attached', 'AttachedBindMode is equal to attached' );
 		assert.equal( Constants.DetachedBindMode, 'detached', 'DetachedBindMode is equal to detached' );
@@ -107,8 +107,6 @@ export default QUnit.module( 'Constants', () => {
 
 		assert.equal( Constants.AlphaFormat, 1021, 'AlphaFormat is equal to 1021' );
 		assert.equal( Constants.RGBAFormat, 1023, 'RGBAFormat is equal to 1023' );
-		assert.equal( Constants.LuminanceFormat, 1024, 'LuminanceFormat is equal to 1024' );
-		assert.equal( Constants.LuminanceAlphaFormat, 1025, 'LuminanceAlphaFormat is equal to 1025' );
 		assert.equal( Constants.DepthFormat, 1026, 'DepthFormat is equal to 1026' );
 		assert.equal( Constants.DepthStencilFormat, 1027, 'DepthStencilFormat is equal to 1027' );
 		assert.equal( Constants.RedFormat, 1028, 'RedFormat is equal to 1028' );
@@ -177,7 +175,6 @@ export default QUnit.module( 'Constants', () => {
 		assert.equal( Constants.NoColorSpace, '', 'NoColorSpace is equal to ""' );
 		assert.equal( Constants.SRGBColorSpace, 'srgb', 'SRGBColorSpace is equal to srgb' );
 		assert.equal( Constants.LinearSRGBColorSpace, 'srgb-linear', 'LinearSRGBColorSpace is equal to srgb-linear' );
-		assert.equal( Constants.DisplayP3ColorSpace, 'display-p3', 'DisplayP3ColorSpace is equal to display-p3' );
 
 		assert.equal( Constants.ZeroStencilOp, 0, 'ZeroStencilOp is equal to 0' );
 		assert.equal( Constants.KeepStencilOp, 7680, 'KeepStencilOp is equal to 7680' );
@@ -209,8 +206,6 @@ export default QUnit.module( 'Constants', () => {
 
 		assert.equal( Constants.GLSL1, '100', 'GLSL1 is equal to 100' );
 		assert.equal( Constants.GLSL3, '300 es', 'GLSL3 is equal to 300 es' );
-
-		assert.equal( Constants._SRGBAFormat, 1035, '_SRGBAFormat is equal to 1035' );
 
 	} );
 

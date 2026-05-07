@@ -36,7 +36,8 @@
 		let container, stats;
 		let camera, controls, scene, renderer;
 		let textureLoader;
-		const clock = new THREE.Clock();
+		const timer = new THREE.Timer();
+		timer.connect( document );
 
 		// Physics variables
 		const gravityConstant = - 9.8;
@@ -59,7 +60,6 @@
 			Ammo = AmmoLib;
 
 			init();
-			animate();
 
 		} );
 
@@ -89,6 +89,7 @@
 			renderer = new THREE.WebGLRenderer( { antialias: true } );
 			renderer.setPixelRatio( window.devicePixelRatio );
 			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.setAnimationLoop( animate );
 			renderer.shadowMap.enabled = true;
 			container.appendChild( renderer.domElement );
 
@@ -419,7 +420,7 @@
 
 		function animate() {
 
-			requestAnimationFrame( animate );
+			timer.update();
 
 			render();
 			stats.update();
@@ -428,7 +429,7 @@
 
 		function render() {
 
-			const deltaTime = clock.getDelta();
+			const deltaTime = timer.getDelta();
 
 			updatePhysics( deltaTime );
 

@@ -135,7 +135,7 @@ html, body {
 и лучше не устанавливать тот же размер, если он уже соответствует желаемому.</p>
 <p>Как только мы узнаем, нужно ли нам изменить размер или нет, мы вызываем
 <code class="notranslate" translate="no">renderer.setSize</code> и передаем новую ширину и высоту. Важно передать <code class="notranslate" translate="no">false</code> в конце.
-<code class="notranslate" translate="no">render.setSize</code> по умолчанию устанавливает размер CSS холста, но это не то,
+<code class="notranslate" translate="no">renderer.setSize</code> по умолчанию устанавливает размер CSS холста, но это не то,
 что нам нужно. Мы хотим, чтобы браузер продолжал работать так же, как и
 для всех других элементов, то есть использовать CSS для определения размера
 отображения элемента. Мы не хотим, чтобы холсты, используемые three.js,
@@ -222,8 +222,8 @@ html, body {
 <pre class="prettyprint showlinemods notranslate notranslate" translate="no">    function resizeRendererToDisplaySize(renderer) {
       const canvas = renderer.domElement;
       const pixelRatio = window.devicePixelRatio;
-      const width = canvas.clientWidth * pixelRatio | 0;
-      const height = canvas.clientHeight * pixelRatio | 0;
+      const width = Math.floor( canvas.clientWidth * pixelRatio );
+      const height = Math.floor( canvas.clientHeight * pixelRatio );
       const needResize = canvas.width !== width || canvas.height !== height;
       if (needResize) {
         renderer.setSize(width, height, false);

@@ -32,11 +32,11 @@
 			let controller1, controller2;
 
 			const cursor = new THREE.Vector3();
+			const color = new THREE.Color();
 
 			let controls;
 
 			init();
-			animate();
 
 			function init() {
 
@@ -75,6 +75,7 @@
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( animate );
 				renderer.xr.enabled = true;
 				container.appendChild( renderer.domElement );
 
@@ -106,7 +107,9 @@
 
 					this.userData.isSqueezing = true;
 					this.userData.positionAtSqueezeStart = this.position.y;
-					this.userData.scaleAtSqueezeStart = this.scale.x;
+			
+					const pivot = this.getObjectByName( 'pivot' );
+					this.userData.scaleAtSqueezeStart = pivot.scale.x;
 
 				}
 
@@ -184,6 +187,10 @@
 
 				if ( userData.isSelecting === true ) {
 
+					const hue = ( performance.now() * 0.001 ) % 1;
+					color.setHSL( hue, 1.0, 0.5 );
+					painter.setColor( color );
+
 					painter.lineTo( cursor );
 					painter.update();
 
@@ -192,12 +199,6 @@
 			}
 
 			function animate() {
-
-				renderer.setAnimationLoop( render );
-
-			}
-
-			function render() {
 
 				handleController( controller1 );
 				handleController( controller2 );

@@ -47,12 +47,12 @@
 
 			let composer, effectFocus;
 
-			const clock = new THREE.Clock();
+			const timer = new THREE.Timer();
+			timer.connect( document );
 
 			let stats;
 
 			init();
-			animate();
 
 			function init() {
 
@@ -96,6 +96,7 @@
 				renderer = new THREE.WebGLRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( animate );
 				renderer.autoClear = false;
 				container.appendChild( renderer.domElement );
 
@@ -237,7 +238,8 @@
 
 			function animate() {
 
-				requestAnimationFrame( animate );
+				timer.update();
+
 				render();
 				stats.update();
 
@@ -245,7 +247,7 @@
 
 			function render() {
 
-				let delta = 10 * clock.getDelta();
+				let delta = 10 * timer.getDelta();
 
 				delta = delta < 2 ? delta : 2;
 

@@ -31,11 +31,10 @@
 
 			import { ColladaLoader } from 'three/addons/loaders/ColladaLoader.js';
 
-			let container, stats, clock;
+			let container, stats, timer;
 			let camera, scene, renderer, elf;
 
 			init();
-			animate();
 
 			function init() {
 
@@ -47,7 +46,8 @@
 
 				scene = new THREE.Scene();
 
-				clock = new THREE.Clock();
+				timer = new THREE.Timer();
+				timer.connect( document );
 
 				// loading manager
 
@@ -80,6 +80,7 @@
 				renderer = new THREE.WebGLRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( animate );
 				container.appendChild( renderer.domElement );
 
 				//
@@ -104,7 +105,7 @@
 
 			function animate() {
 
-				requestAnimationFrame( animate );
+				timer.update();
 
 				render();
 				stats.update();
@@ -113,7 +114,7 @@
 
 			function render() {
 
-				const delta = clock.getDelta();
+				const delta = timer.getDelta();
 
 				if ( elf !== undefined ) {
 

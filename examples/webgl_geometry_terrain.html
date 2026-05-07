@@ -43,10 +43,10 @@
 			let mesh, texture;
 
 			const worldWidth = 256, worldDepth = 256;
-			const clock = new THREE.Clock();
+			const timer = new THREE.Timer();
+			timer.connect( document );
 
 			init();
-			animate();
 
 			function init() {
 
@@ -85,6 +85,7 @@
 				renderer = new THREE.WebGLRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( animate );
 				container.appendChild( renderer.domElement );
 
 				controls = new FirstPersonControls( camera, renderer.domElement );
@@ -107,8 +108,6 @@
 				camera.updateProjectionMatrix();
 
 				renderer.setSize( window.innerWidth, window.innerHeight );
-
-				controls.handleResize();
 
 			}
 
@@ -214,7 +213,7 @@
 
 			function animate() {
 
-				requestAnimationFrame( animate );
+				timer.update();
 
 				render();
 				stats.update();
@@ -224,7 +223,7 @@
 
 			function render() {
 
-				controls.update( clock.getDelta() );
+				controls.update( timer.getDelta() );
 				renderer.render( scene, camera );
 
 			}

@@ -31,10 +31,10 @@
 
 			let camera, scene, renderer, controls;
 
-			const clock = new THREE.Clock();
+			const timer = new THREE.Timer();
+			timer.connect( document );
 
 			init();
-			animate();
 
 			function init() {
 
@@ -94,6 +94,7 @@
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( animate );
 				container.appendChild( renderer.domElement );
 
 				//
@@ -119,14 +120,9 @@
 
 			function animate() {
 
-				requestAnimationFrame( animate );
-				render();
+				timer.update();
 
-			}
-
-			function render() {
-
-				controls.update( clock.getDelta() );
+				controls.update( timer.getDelta() );
 
 				renderer.render( scene, camera );
 
